@@ -2,14 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include 'components/HeadHtml.html' %}
+    {% include 'components/layout/HeadHtml.html' %}
     <title>Register</title>
 </head>
 <body>
-    {% include 'components/Navbar.html' %}
     <div>
-        <h1>Register</h1>
+        <h1><a href="{% url 'register' %}" class="text-9xl">Register</a></h1>
     </div>
-    
+    <div>
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+    <div>
+        <h1><a href="{% url '' %}" class="">HomePage</a></h1>
+    </div>
 </body>
+{% include 'components/layout/Footer.html' %}
 </html>

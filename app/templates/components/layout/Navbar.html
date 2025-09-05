@@ -1,0 +1,46 @@
+{% load static %}
+      <nav class="bg-white p-4 shadow-md">
+          <div class="container mx-auto flex justify-between items-center">
+      
+              <a href="{% url '' %}" class="text-2xl font-bold text-gray-800 mr-8">Tên doanh nghiệp</a>
+      
+              <!-- Thanh tìm kiếm -->
+              <div class="hidden md:flex flex-grow max-w-md">
+                  <input type="text" placeholder="Tìm kiếm..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+      
+              <!-- Các liên kết điều hướng -->
+              <div class="hidden md:flex space-x-4 ml-8">
+                  <a href="{% url 'favorite' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Favorite</a>
+                  <a href="{% url 'profile' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Profile</a>
+                  <a href="{% url 'upload' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Upload</a>
+                  <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Tài khoản</a>
+              </div>
+
+              <!-- Hamburger Menu -->
+              <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+              </div>
+          </div>
+
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <a href="{% url 'favorite' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Favorite</a>
+            <a href="{% url 'profile' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Profile</a>
+            <a href="{% url 'upload' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Upload</a>
+            <a href="{% url 'login' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Tài khoản</a>
+          </div>
+      </nav>
+
+<script>
+    document.getElementById('mobile-menu-button').onclick = function() {
+        var menu = document.getElementById('mobile-menu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+        }
+    };
+</script>

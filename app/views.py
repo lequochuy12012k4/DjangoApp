@@ -14,5 +14,13 @@ def RegisterPage(request):
   return HttpResponse(template.render())
 
 def ProfilePage(request):
-  template = loader.get_template('Navbar/Profile.html')
+  template = loader.get_template('Navbar/ProfilePage.html')
+  return HttpResponse(template.render())
+
+def UploadPage(request):
+  template = loader.get_template('Navbar/UploadPage.html')
+  return HttpResponse(template.render())
+
+def FavoritePage(request):
+  template = loader.get_template('Navbar/FavoritePage.html')
   return HttpResponse(template.render())
