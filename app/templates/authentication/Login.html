@@ -5,17 +5,7 @@
     {% include 'components/layout/HeadHtml.html' %}
     <title>Login</title>
 </head>
-<body>
-    <div>
-        <h1><a href="{% url 'login' %}" class="text-9xl">Login</a></h1>
-    </div>
-    <div>
-        <h1><a href="{% url 'register' %}">Register</a></h1>
-    </div>
-
-    <div>
-        <h1><a href="{% url '' %}" class="">HomePage</a></h1>
-    </div>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    {% include 'components/authentication/LoginContent.html' %}
 </body>
-{% include 'components/layout/Footer.html' %}
 </html>

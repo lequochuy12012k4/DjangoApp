@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
+from .models import *
 
 def HomePage(request):
   template = loader.get_template('HomePage.html')
@@ -11,6 +12,14 @@ def LoginPage(request):
 
 def RegisterPage(request):
   template = loader.get_template('authentication/Register.html')
+  return HttpResponse(template.render())
+
+def ForgotPasswordPage(request):
+  template = loader.get_template('authentication/ForgotPassword.html')
+  return HttpResponse(template.render())
+
+def ResetPasswordPage(request):
+  template = loader.get_template('authentication/ResetPassword.html')
   return HttpResponse(template.render())
 
 def ProfilePage(request):
