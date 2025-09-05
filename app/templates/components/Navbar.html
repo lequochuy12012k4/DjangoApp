@@ -1,0 +1,12 @@
+{% load static %}
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex items-center justify-between">
+        <div class="text-white text-lg font-bold">Your Logo</div>
+        <ul class="flex space-x-4">
+            <li><a href="{% url '' %}" class="text-gray-300 hover:text-white">Home</a></li>
+            <li><a href="{% url 'login' %}" class="text-gray-300 hover:text-white">Login</a></li>
+            <li><a href="{% url 'register' %}" class="text-gray-300 hover:text-white">Register</a></li>
+            <li><a href="{% url 'profile' %}" class="text-gray-300 hover:text-white">Profile</a></li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'components/HeadHtml.html' %}
+    <title>Home</title>
+</head>
+<body>
+    {% include 'components/Navbar.html' %}
+    <br>
+    <div class="bg-amber-900 text-amber-700 hover:bg-amber-950">hello</div>
+    <br>
+    <div class="bg-blue-600 text-red-500">test</div>
+    <img class="w-52 h-52 hover:bg-amber-950" src="{% static 'image2.png' %}" alt="">
+    {% include 'components/Footer.html' %}
+</body>
+</html>
