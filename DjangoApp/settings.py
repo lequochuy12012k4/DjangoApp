@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--yp=ma#mfx(pkl0jo=8vtm+(m(j_n(mit)^-898(g0x2-g-q1o
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CSRF_TRUSTED_ORIGINS = ['https://8000-firebase-djangoapp-1757003725302.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev']
 
 # Application definition
 
@@ -101,11 +101,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# https://docs.djangoproject.com/en/5.2/topics/i1n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
@@ -120,6 +120,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "app" / "static",
     BASE_DIR / "app" / "public",
 ]
+MEDIA_URL = '/data/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'app', 'data')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
