@@ -1,13 +1,6 @@
+{% extends 'Base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'components/layout/HeadHtml.html' %}
-    <title>Home</title>
-</head>
-<body>
-    {% include 'components/layout/Navbar.html' %}
+
+{% block content %}
     {% include 'components/HomeContent.html' %}
-</body>
-{% include 'components/layout/Footer.html' %}
-</html>
+{% endblock %}

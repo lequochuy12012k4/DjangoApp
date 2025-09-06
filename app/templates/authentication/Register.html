@@ -1,11 +1,8 @@
+{% extends 'authentication/AuthenticationBase.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'components/layout/HeadHtml.html' %}
-    <title>Register</title>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    {% include 'components/authentication/RegisterContent.html' %}
-</body>
-</html>
+
+{% block content %}
+    <div class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+        {% include 'components/authentication/RegisterContent.html' %}
+    </div>
+{% endblock %}

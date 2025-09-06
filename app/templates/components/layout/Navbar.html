@@ -1,46 +1,114 @@
 {% load static %}
-      <nav class="bg-white p-4 shadow-md">
-          <div class="container mx-auto flex justify-between items-center">
-      
-              <a href="{% url '' %}" class="text-2xl font-bold text-gray-800 mr-8">Tên doanh nghiệp</a>
-      
-              <!-- Thanh tìm kiếm -->
-              <div class="hidden md:flex flex-grow max-w-md">
-                  <input type="text" placeholder="Tìm kiếm..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-              </div>
-      
-              <!-- Các liên kết điều hướng -->
-              <div class="hidden md:flex space-x-4 ml-8">
-                  <a href="{% url 'favorite' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Favorite</a>
-                  <a href="{% url 'profile' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Profile</a>
-                  <a href="{% url 'upload' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Upload</a>
-                  <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Tài khoản</a>
-              </div>
+<nav class="bg-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'home' %}" class="text-2xl font-bold text-gray-800 mr-8">Tên doanh nghiệp</a>
 
-              <!-- Hamburger Menu -->
-              <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                </button>
-              </div>
-          </div>
+        <!-- Thanh tìm kiếm -->
+        {% if user.is_authenticated %}
+        <div class="hidden md:flex flex-grow max-w-md relative">
+            <input type="text" id="search-input" placeholder="Tìm kiếm..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div id="search-results" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md mt-1 z-10 hidden shadow-lg">
+                <!-- Kết quả tìm kiếm sẽ được chèn vào đây -->
+            </div>
+        </div>
+        {% endif %}
 
-          <!-- Mobile Menu -->
-          <div id="mobile-menu" class="hidden md:hidden mt-4">
-            <a href="{% url 'favorite' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Favorite</a>
-            <a href="{% url 'profile' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Profile</a>
-            <a href="{% url 'upload' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Upload</a>
-            <a href="{% url 'login' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Tài khoản</a>
-          </div>
-      </nav>
+        <!-- Các liên kết điều hướng -->
+        <div class="hidden md:flex space-x-4 ml-8">
+            {% if user.is_authenticated %}
+                <a href="{% url 'favorites' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Favorite</a>
+                <a href="{% url 'profile' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Profile</a>
+                <a href="{% url 'upload' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Upload</a>
+                <a href="#" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">{{ user.username }}</a>
+                <a href="{% url 'logout' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300"><i class="fas fa-sign-out-alt"></i></a>
+            {% else %}
+                <a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md hover:bg-gray-100 transition duration-300">Login</a>
+            {% endif %}
+        </div>
+
+        <!-- Hamburger Menu -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+          </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4">
+        {% if user.is_authenticated %}
+        <div class="p-4 relative">
+            <input type="text" id="mobile-search-input" placeholder="Tìm kiếm..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <div id="mobile-search-results" class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-md mt-1 z-10 hidden shadow-lg">
+                <!-- Kết quả tìm kiếm sẽ được chèn vào đây -->
+            </div>
+        </div>
+        <a href="{% url 'favorites' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Favorite</a>
+        <a href="{% url 'profile' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Profile</a>
+        <a href="{% url 'upload' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Upload</a>
+        <a href="#" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">{{ user.username }}</a>
+        <a href="{% url 'logout' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100"><i class="fas fa-sign-out-alt"></i></a>
+        {% else %}
+        <a href="{% url 'login' %}" class="block text-gray-600 hover:text-gray-800 py-2 px-4 hover:bg-gray-100">Login</a>
+        {% endif %}
+    </div>
+</nav>
 
 <script>
-    document.getElementById('mobile-menu-button').onclick = function() {
-        var menu = document.getElementById('mobile-menu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-        } else {
-            menu.classList.add('hidden');
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const mobileSearchInput = document.getElementById('mobile-search-input');
+        const mobileSearchResults = document.getElementById('mobile-search-results');
+
+        function setupSearch(input, resultsContainer) {
+            if (!input) return;
+            input.addEventListener('keyup', function() {
+                const query = input.value;
+                if (query.length > 2) { // Start searching after 2 characters
+                    fetch(`{% url 'search' %}?q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            resultsContainer.innerHTML = '';
+                            if (data.length > 0) {
+                                data.forEach(doc => {
+                                    const resultItem = document.createElement('a');
+                                    resultItem.href = `/document/${doc.id}/`;
+                                    resultItem.className = 'block p-2 hover:bg-gray-100 border-b';
+                                    resultItem.textContent = doc.title;
+                                    resultsContainer.appendChild(resultItem);
+                                });
+                                resultsContainer.classList.remove('hidden');
+                            } else {
+                                const noResultItem = document.createElement('div');
+                                noResultItem.className = 'p-2 text-gray-500';
+                                noResultItem.textContent = 'No results found';
+                                resultsContainer.appendChild(noResultItem);
+                                resultsContainer.classList.remove('hidden');
+                            }
+                        });
+                } else {
+                    resultsContainer.classList.add('hidden');
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (resultsContainer && !input.contains(event.target) && !resultsContainer.contains(event.target)) {
+                    resultsContainer.classList.add('hidden');
+                }
+            });
         }
-    };
+
+        setupSearch(searchInput, searchResults);
+        setupSearch(mobileSearchInput, mobileSearchResults);
+
+        document.getElementById('mobile-menu-button').onclick = function() {
+            var menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        };
+    });
 </script>
