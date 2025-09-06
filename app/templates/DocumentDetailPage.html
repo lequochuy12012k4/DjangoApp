@@ -1,5 +1,6 @@
 {% extends 'Base.html' %}
 {% block content %}
+<title>{{ document.title }}</title>
 <div class="container mx-auto mt-8 p-4">
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <img src="{{ document.image.url }}" alt="Document Image" class="w-full h-96 object-cover">
