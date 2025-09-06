@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 from django.http import JsonResponse
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.urls import reverse
+from django.utils.html import format_html
 
 def HomePage(request):
   documents = Document.objects.all()
@@ -53,10 +58,45 @@ def LogoutUser(request):
   return redirect('login')
 
 def ForgotPasswordPage(request):
-  return render(request, 'authentication/ForgotPassword.html')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, 'User with this email does not exist.')
+            return redirect('forgot-password')
 
-def ResetPasswordPage(request):
-  return render(request, 'authentication/ResetPassword.html')
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        reset_link = request.build_absolute_uri(reverse('reset-password', kwargs={'uidb64': uid, 'token': token}))
+
+        messages.success(request, format_html('Password reset link: <a href="{}">{}</a>', reset_link, reset_link))
+        return redirect('forgot-password')
+
+    return render(request, 'authentication/ForgotPassword.html')
+
+def ResetPasswordPage(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('confirm_password')
+            if new_password != confirm_password:
+                messages.error(request, "Passwords do not match.")
+                return redirect(request.path)
+            user.set_password(new_password)
+            user.save()
+            messages.success(request, "Password has been reset successfully. You can now log in.")
+            return redirect('login')
+        return render(request, 'authentication/ResetPassword.html')
+    else:
+        messages.error(request, "Invalid reset link.")
+        return redirect('forgot-password')
 
 @login_required(login_url='login')
 def ProfilePage(request):
